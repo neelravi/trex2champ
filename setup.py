@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 setup(
     name='trex2champ',
     version='2.1.8',
-    packages=find_packages(),
+    packages=['./'],
     install_requires=[
         'trexio>=1.3.2',
         'resultsFile>=2.4',
