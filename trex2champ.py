@@ -64,7 +64,7 @@ class Champ:
     def __init__(self) -> None:
         self.__author__ = "Ravindra Shinde "
         self.__copyright__ = "@Copyright 2023, The TREX Project "
-        self.__version__ = "v2.1.7"
+        self.__version__ = "v2.1.8"
         self.__maintainer__ = "Ravindra Shinde"
         self.__email__ = "r.l.shinde@utwente.nl"
         self.__status__ = "Development"
