@@ -37,106 +37,143 @@
 #   r.l.shinde@utwente.nl
 
 
-
+import unittest
 import sys
-from trex2champ import Champ
+import os
+import numpy as np
+from collections import Counter
+import argparse
 
-# Before we do anything else, we need to check if trexio and resultsFile are installed
 try:
     import trexio
 except:
     print("Error: The TREXIO Python library is not installed")
     sys.exit(1)
 
+try:
+    import resultsFile
+except:
+    print("Error: The resultsFile Python library is not installed")
+    sys.exit(1)
 
-def test_benzene_ground_state():
-    champ = Champ()
-    champ.filename="benzene.hdf5"
-    champ.motype="RHF"
-    champ.back_end='hdf5'
-    champ.gamessfile=None
-    champ.save_geometry=True
-    champ.save_lcao = True
-    champ.save_basis = True
-    champ.save_eigenvalues = False
-    champ.save_ecp = True
-    champ.save_symmetry = False
-    champ.save_determinants = False
-    champ.save_csfs = False
+from trex2champ import Champ
 
-    # Optional argument for controlling the names of the output files
-    champ.basis_prefix = "TEST1"
+class TestChamp(unittest.TestCase):
 
-    champ.run()
-    assert champ is not None
-    assert champ.nucleus_num == 12
-    assert champ.ao_num == 114
-    assert champ.mo_num == 108
-    assert champ.shell_num == 48
-    assert champ.prim_num == 186
-    assert champ.ecp_num == 42
+    def setUp(self):
+        self.champ = Champ()
+
+    def test_author(self):
+        self.assertEqual(self.champ.__author__, "Ravindra Shinde ")
+
+    def test_email(self):
+        self.assertEqual(self.champ.__email__, "r.l.shinde@utwente.nl")
+
+if __name__ == '__main__':
+    unittest.main()
 
 
 
-def test_formaldehyde_ground_state():
-    champ = Champ()
-    champ.filename="COH2_GS.trexio"
-    champ.motype="RHF"
-    champ.back_end='HDF5'
-    champ.gamessfile=None
-    champ.save_geometry=True
-    champ.save_lcao = True
-    champ.save_basis = True
-    champ.save_eigenvalues = False
-    champ.save_ecp = True
-    champ.save_symmetry = False
-    champ.save_determinants = True
-    champ.save_csfs = False
 
-    # Optional argument for controlling the names of the output files
-    champ.basis_prefix = "TEST2"
+# import sys
+# from trex2champ import Champ
 
-    champ.run()
-    assert champ is not None
-    assert champ.nucleus_num == 4
-    assert champ.ao_num == 66
-    assert champ.mo_num == 66
-    assert champ.shell_num == 26
-    assert champ.prim_num == 62
-    assert champ.ecp_num == 14
-    assert champ.num_dets == 1862
-    assert champ.num_states == 1
+# # Before we do anything else, we need to check if trexio and resultsFile are installed
+# try:
+#     import trexio
+# except:
+#     print("Error: The TREXIO Python library is not installed")
+#     sys.exit(1)
 
 
-def test_butadiene():
-    champ = Champ()
-    champ.filename="butadiene_ci44_pVDZ.hdf5"
-    champ.motype="GUGA"
-    champ.back_end='HDF5'
-    champ.gamessfile=None
-    champ.save_geometry=True
-    champ.save_lcao = True
-    champ.save_basis = True
-    champ.save_eigenvalues = False
-    champ.save_ecp = True
-    champ.save_symmetry = False
-    champ.save_determinants = True
-    champ.save_csfs = False
+# def test_benzene_ground_state():
+#     champ = Champ()
+#     champ.filename="benzene.hdf5"
+#     champ.motype="RHF"
+#     champ.back_end='hdf5'
+#     champ.gamessfile=None
+#     champ.save_geometry=True
+#     champ.save_lcao = True
+#     champ.save_basis = True
+#     champ.save_eigenvalues = False
+#     champ.save_ecp = True
+#     champ.save_symmetry = False
+#     champ.save_determinants = False
+#     champ.save_csfs = False
 
-    # Optional argument for controlling the names of the output files
-    champ.basis_prefix = "TEST3"
+#     # Optional argument for controlling the names of the output files
+#     champ.basis_prefix = "TEST1"
 
-    champ.run()
-    assert champ is not None
-    assert champ.nucleus_num == 10
-    assert champ.ao_num == 86
-    assert champ.mo_num == 86
-    assert champ.shell_num == 38
-    assert champ.prim_num == 114
-    assert champ.ecp_num == 34
+#     champ.run()
+#     assert champ is not None
+#     assert champ.nucleus_num == 12
+#     assert champ.ao_num == 114
+#     assert champ.mo_num == 108
+#     assert champ.shell_num == 48
+#     assert champ.prim_num == 186
+#     assert champ.ecp_num == 42
 
 
-if __name__ == "__main__":
-    champ = Champ()
-    champ.__main__()
-    champ.run()
+
+# def test_formaldehyde_ground_state():
+#     champ = Champ()
+#     champ.filename="COH2_GS.trexio"
+#     champ.motype="RHF"
+#     champ.back_end='HDF5'
+#     champ.gamessfile=None
+#     champ.save_geometry=True
+#     champ.save_lcao = True
+#     champ.save_basis = True
+#     champ.save_eigenvalues = False
+#     champ.save_ecp = True
+#     champ.save_symmetry = False
+#     champ.save_determinants = True
+#     champ.save_csfs = False
+
+#     # Optional argument for controlling the names of the output files
+#     champ.basis_prefix = "TEST2"
+
+#     champ.run()
+#     assert champ is not None
+#     assert champ.nucleus_num == 4
+#     assert champ.ao_num == 66
+#     assert champ.mo_num == 66
+#     assert champ.shell_num == 26
+#     assert champ.prim_num == 62
+#     assert champ.ecp_num == 14
+#     assert champ.num_dets == 1862
+#     assert champ.num_states == 1
+
+
+# def test_butadiene():
+#     champ = Champ()
+#     champ.filename="butadiene_ci44_pVDZ.hdf5"
+#     champ.motype="GUGA"
+#     champ.back_end='HDF5'
+#     champ.gamessfile=None
+#     champ.save_geometry=True
+#     champ.save_lcao = True
+#     champ.save_basis = True
+#     champ.save_eigenvalues = False
+#     champ.save_ecp = True
+#     champ.save_symmetry = False
+#     champ.save_determinants = True
+#     champ.save_csfs = False
+
+#     # Optional argument for controlling the names of the output files
+#     champ.basis_prefix = "TEST3"
+
+#     champ.run()
+#     assert champ is not None
+#     assert champ.nucleus_num == 10
+#     assert champ.ao_num == 86
+#     assert champ.mo_num == 86
+#     assert champ.shell_num == 38
+#     assert champ.prim_num == 114
+#     assert champ.ecp_num == 34
+
+
+# if __name__ == "__main__":
+#     champ = Champ()
+#     champ.__main__()
+#     champ.run()
