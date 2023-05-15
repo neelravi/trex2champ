@@ -56,7 +56,7 @@ import sys
 #     print("Error: The resultsFile Python library is not installed")
 #     sys.exit(1)
 
-from trex2champ import Champ
+from .trex2champ import Champ
 
 class TestChamp(unittest.TestCase):
 
