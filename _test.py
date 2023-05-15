@@ -39,22 +39,22 @@
 
 import unittest
 import sys
-import os
-import numpy as np
-from collections import Counter
-import argparse
+# import os
+# import numpy as np
+# from collections import Counter
+# import argparse
 
-try:
-    import trexio
-except:
-    print("Error: The TREXIO Python library is not installed")
-    sys.exit(1)
+# try:
+#     import trexio
+# except:
+#     print("Error: The TREXIO Python library is not installed")
+#     sys.exit(1)
 
-try:
-    import resultsFile
-except:
-    print("Error: The resultsFile Python library is not installed")
-    sys.exit(1)
+# try:
+#     import resultsFile
+# except:
+#     print("Error: The resultsFile Python library is not installed")
+#     sys.exit(1)
 
 from trex2champ import Champ
 
